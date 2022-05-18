@@ -2,13 +2,15 @@
 """
 Simple Flask app
 """
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from flask_babel import Babel
 
 
 class Config:
     """Class config"""
     LANGUAGES = ["en", "fr"]
+    default_locale = "en"
+    default_timezone = "UTC"
 
 
 config = Config()
@@ -16,25 +18,17 @@ config = Config()
 
 app = Flask(__name__)
 app.config.from_object(config)
-babel = Babel(app)
+babel = Babel(
+              app=app,
+              default_locale=config.default_locale,
+              default_timezone=config.default_timezone
+              )
 
 
 @app.route("/")
-def index():
+def index() -> render_template:
     """Function to render an html page"""
-    return render_template('0-index.html')
-
-
-@babel.localeselector
-def get_locale():
-    """Get locale"""
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
-
-
-@babel.timezoneselector
-def get_timezone():
-    """Get Timezone"""
-    return "UTC"
+    return render_template('1-index.html')
 
 
 if __name__ == "__main__":
