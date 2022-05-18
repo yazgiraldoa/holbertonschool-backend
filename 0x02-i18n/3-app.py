@@ -2,7 +2,7 @@
 """
 Simple Flask app
 """
-from flask import Flask, render_template, request
+from flask import Flask, flash, render_template, request, _
 from flask_babel import Babel
 
 
@@ -19,6 +19,9 @@ config = Config()
 app = Flask(__name__)
 app.config.from_object(config)
 babel = Babel(app)
+
+flash(_('home_title'))
+flash(_('home_header'))
 
 
 @app.route("/")

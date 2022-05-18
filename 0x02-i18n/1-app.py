@@ -6,10 +6,6 @@ from flask import Flask, render_template
 from flask_babel import Babel
 
 
-app = Flask(__name__)
-babel = Babel(app)
-
-
 class Config:
     """Class config"""
     LANGUAGES = ["en", "fr"]
@@ -17,11 +13,13 @@ class Config:
     DEFAULT_TIMEZONE = "UTC"
 
 
+app = Flask(__name__)
 app.config.from_object(Config)
+babel = Babel(app)
 
 
 @app.route("/")
-def index() -> render_template:
+def index():
     """Function to render an html page"""
     return render_template('1-index.html')
 
